@@ -1,0 +1,4 @@
+services/*
+!services/xbrowsersync/
+services/xbrowsersync/mongodb
+!services/xbrowsersync/config/settings.json

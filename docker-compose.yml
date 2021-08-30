@@ -1,0 +1,145 @@
+version: "3.6"
+
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/html:/usr/share/nginx/html
+    network_mode: "host"
+
+  php-fpm:
+    image: php:fpm
+    volumes:
+      - ./nginx/html:/usr/share/nginx/html
+    ports:
+      - 127.0.0.1:9000:9000
+
+  qbittorrent:
+    image: ghcr.io/linuxserver/qbittorrent
+    environment:
+      - TZ=Europe/London
+      - WEBUI_PORT=8080
+    volumes:
+      - ./services/qbittorrent/config:/config
+      - ./services/qbittorrent/downloads:/downloads
+    ports:
+      - 127.0.0.1:1001:8080
+      - 6881:6881
+      - 6881:6881/udp
+
+  jellyfin:
+    image: jellyfin/jellyfin
+    volumes:
+      - ./services/jellyfin/config:/config
+      - ./services/jellyfin/cache:/cache
+      - ./services/qbittorrent/downloads:/downloads
+    ports:
+      - 127.0.0.1:1002:8096
+
+  owncloud:
+    image: owncloud/server:10.7
+    volumes:
+      - ./services/owncloud/data:/mnt/data
+    environment:
+      - OWNCLOUD_DOMAIN=localhost
+      - OWNCLOUD_DB_TYPE=mysql
+      - OWNCLOUD_DB_NAME=owncloud
+      - OWNCLOUD_DB_USERNAME=owncloud
+      - OWNCLOUD_DB_PASSWORD=owncloud
+      - OWNCLOUD_DB_HOST=owncloud-mariadb
+      - OWNCLOUD_ADMIN_USERNAME=admin
+      - OWNCLOUD_ADMIN_PASSWORD=admin
+      - OWNCLOUD_MYSQL_UTF8MB4=true
+      - OWNCLOUD_REDIS_ENABLED=true
+      - OWNCLOUD_REDIS_HOST=owncloud-redis
+    healthcheck:
+      test: ["CMD", "/usr/bin/healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    ports:
+      - 127.0.0.1:1003:8080
+    depends_on:
+      - owncloud-mariadb
+      - owncloud-redis
+
+  owncloud-mariadb:
+    image: mariadb:10.5
+    volumes:
+      - ./services/owncloud/mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=owncloud
+      - MYSQL_USER=owncloud
+      - MYSQL_PASSWORD=owncloud
+      - MYSQL_DATABASE=owncloud
+    command: ["--max-allowed-packet=128M", "--innodb-log-file-size=64M"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-u", "root", "--password=owncloud"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  owncloud-redis:
+    image: redis:6
+    volumes:
+      - ./services/owncloud/redis:/data
+    command: ["--databases", "1"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  xbrowsersync:
+    image: xbrowsersync/api
+    volumes:
+      - ./services/xbrowsersync/config/settings.json:/usr/src/api/config/settings.json
+    environment:
+      - XBROWSERSYNC_DB_USER=xbrowsersync
+      - XBROWSERSYNC_DB_PWD=xbrowsersync
+    ports:
+      - 127.0.0.1:1004:8080
+    depends_on:
+      - xbrowsersync-mongodb
+
+  xbrowsersync-mongodb:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=xbrowsersync
+      - MONGO_INITDB_ROOT_PASSWORD=xbrowsersync
+    volumes:
+      - ./services/xbrowsersync/mongodb/data:/data/db
+
+  vaultwarden:
+    image: vaultwarden/server
+    volumes:
+      - ./services/vaultwarden/data:/data
+    environment:
+      - SIGNUPS_ALLOWED=true
+      - ADMIN_TOKEN=TpjaEl38L2pEnVMJalKE4/PUXtsnvivRHl/ru2bsJ4XrUUZ+Es7KlcL7nxG2aJkM
+      - DOMAIN=http://localhost/bitwarden
+    ports:
+      - 127.0.0.1:1005:80
+
+  netdata:
+    image: netdata/netdata
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - ./services/netdata/config:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+    ports:
+      - 127.0.0.1:1006:19999
+
+volumes:
+  netdatalib:
+  netdatacache:
