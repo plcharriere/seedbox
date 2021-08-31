@@ -9,7 +9,7 @@ $services = [
   [
     "name" => "Jellyfin",
     "icon" => "svg",
-    "desc" => "Streaming plateform",
+    "desc" => "Streaming platform",
   ],
   [
     "name" => "ownCloud",

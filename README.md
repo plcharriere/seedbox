@@ -4,7 +4,7 @@ Quickly deploy and configure a seedbox with self-hosted services and a web porta
 
 ## Screenshot
 
-![Seedbox web portal screenshot](https://i.imgur.com/IgdwB27.png)
+![Seedbox web portal screenshot](https://i.imgur.com/t5GmvQT.png)
 
 ## Services
 
