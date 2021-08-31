@@ -35,5 +35,11 @@ Then you can access the web portal at [http://localhost:80](http://localhost:80)
 
 ## Notes
 
-Default username for qBittorrent is `admin` and password is `adminadmin`
+Services data and configurations are stored in `services/`.
+
+Default username for qBittorrent is `admin` and password is `adminadmin`.
 (cf. [hub.docker.com/r/linuxserver/qbittorrent](https://hub.docker.com/r/linuxserver/qbittorrent))
+
+qBittorrent downloads are stored in `services/qbittorrent/downloads/`.
+
+qBittorrent downloads folder is mounted in Jellyfin container at `/downloads`.
