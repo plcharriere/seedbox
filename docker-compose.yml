@@ -6,6 +6,7 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/html:/usr/share/nginx/html
+      - ./services/qbittorrent/downloads:/usr/share/nginx/downloads
     network_mode: "host"
 
   php-fpm:
