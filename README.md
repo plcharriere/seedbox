@@ -1,6 +1,12 @@
 # Seedbox
 
-Quickly deploy a seedbox with self-hosted services using Docker and a single docker-compose.yml file.
+Quickly deploy a seedbox with self-hosted services and a web portal using Docker and a single docker-compose.yml file.
+
+## Screenshot
+
+![Seedbox web portal screenshot](https://i.imgur.com/vZhFVX6.png)
+
+## Services
 
 Current services I use :
 
@@ -11,12 +17,23 @@ Current services I use :
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
 - [netdata](https://github.com/netdata/netdata)
 
-## Screenshot
+## How to setup and deploy
 
-![Seedbox web portal screenshot](https://i.imgur.com/vZhFVX6.png)
+### Setup
 
-## How to deploy
+Copy and configure your environment file :
+
+`cp .env.example .env`
+
+### Deploy
 
 Install [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) on your machine and simply run :
 
-```docker-compose up -d```
+`docker-compose up -d`
+
+Then access the web portal at [http://localhost:80](http://localhost:80)
+
+## Notes
+
+Default username for qBittorrent is `admin` and password is `adminadmin`
+(cf. [hub.docker.com/r/linuxserver/qbittorrent](https://hub.docker.com/r/linuxserver/qbittorrent))

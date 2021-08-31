@@ -18,8 +18,7 @@ services:
   qbittorrent:
     image: ghcr.io/linuxserver/qbittorrent
     environment:
-      - TZ=Europe/London
-      - WEBUI_PORT=8080
+      - TZ=${QBITTORRENT_TIMEZONE}
     volumes:
       - ./services/qbittorrent/config:/config
       - ./services/qbittorrent/downloads:/downloads
@@ -48,8 +47,8 @@ services:
       - OWNCLOUD_DB_USERNAME=owncloud
       - OWNCLOUD_DB_PASSWORD=owncloud
       - OWNCLOUD_DB_HOST=owncloud-mariadb
-      - OWNCLOUD_ADMIN_USERNAME=admin
-      - OWNCLOUD_ADMIN_PASSWORD=admin
+      - OWNCLOUD_ADMIN_USERNAME=${OWNCLOUD_ADMIN_USERNAME}
+      - OWNCLOUD_ADMIN_PASSWORD=${OWNCLOUD_ADMIN_PASSWORD}
       - OWNCLOUD_MYSQL_UTF8MB4=true
       - OWNCLOUD_REDIS_ENABLED=true
       - OWNCLOUD_REDIS_HOST=owncloud-redis
@@ -116,9 +115,9 @@ services:
     volumes:
       - ./services/vaultwarden/data:/data
     environment:
-      - SIGNUPS_ALLOWED=true
-      - ADMIN_TOKEN=TpjaEl38L2pEnVMJalKE4/PUXtsnvivRHl/ru2bsJ4XrUUZ+Es7KlcL7nxG2aJkM
-      - DOMAIN=http://localhost/bitwarden
+      - DOMAIN=${VAULTWARDEN_DOMAIN}
+      - SIGNUPS_ALLOWED=${VAULTWARDEN_SIGNUP_ALLOWED}
+      - ADMIN_TOKEN=${VAULTWARDEN_ADMIN_TOKEN}
     ports:
       - 127.0.0.1:1005:80
 

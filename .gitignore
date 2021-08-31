@@ -1,3 +1,5 @@
+.env
+
 services/*
 !services/xbrowsersync/
 services/xbrowsersync/mongodb
