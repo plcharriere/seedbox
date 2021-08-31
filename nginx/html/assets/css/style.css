@@ -1,0 +1,49 @@
+html, body {
+	background: #eee;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.box {
+	height: 190px;
+	padding-bottom: 35px;
+	margin-right: 40px;
+}
+.logo {
+	height: 128px;
+}
+.card {
+	background: white;
+	border-radius: 10px;
+	border: none;
+	padding: 20px;
+	margin: 15px;
+	box-shadow: 0 .125rem .25rem rgba(0 0 0 / 8%);
+	text-align: center;
+	transition: all 0.3s;
+	cursor: pointer;
+}
+.card:hover {
+	box-shadow: 0 1rem 1rem rgb(0 0 0 / 8%);
+	transform: translateY(-10px) scale(1.05);
+}
+.service-logo {
+	width: 40px;
+	height: 40px;
+	display: inline-block;
+}
+a.col {
+	color: inherit;
+	text-decoration: inherit;
+	min-width: 350px;
+}
+@keyframes zoomIn {
+  0% {
+    transform: scale(0.97);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+* {
+  animation: 0.5s ease-out 0s 1 zoomIn;
+}
