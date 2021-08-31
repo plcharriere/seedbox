@@ -12,7 +12,7 @@ $services = [
     "desc" => "Streaming plateform",
   ],
   [
-    "name" => "Owncloud",
+    "name" => "ownCloud",
     "icon" => "svg",
     "desc" => "Cloud service",
   ],
@@ -27,7 +27,7 @@ $services = [
     "desc" => "Password manager",
   ],
   [
-    "name" => "Netdata",
+    "name" => "netdata",
     "icon" => "png",
     "desc" => "System monitoring",
   ]
