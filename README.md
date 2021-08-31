@@ -4,7 +4,7 @@ Quickly deploy a seedbox with self-hosted services and a web portal using Docker
 
 ## Screenshot
 
-![Seedbox web portal screenshot](https://i.imgur.com/vZhFVX6.png)
+![Seedbox web portal screenshot](https://i.imgur.com/IgdwB27.png)
 
 ## Services
 
@@ -31,7 +31,7 @@ Install [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https
 
 `docker-compose up -d`
 
-Then access the web portal at [http://localhost:80](http://localhost:80)
+Then you can access the web portal at [http://localhost:80](http://localhost:80).
 
 ## Notes
 
