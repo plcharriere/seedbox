@@ -21,17 +21,21 @@ Quickly deploy and configure a seedbox with self-hosted services and a web porta
 
 Copy and configure your environment file :
 
-`cp .env.example .env`
+```
+cp .env.example .env
+```
 
 ### Deploy
 
 Install [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) on your machine and simply run :
 
-`docker-compose up -d`
+```
+docker-compose up -d
+```
 
 Then you can access the web portal at [http://localhost:80](http://localhost:80)
 
-## Add a service
+## How to add a service
 
 Find a Docker image for your service and add it to the `docker-compose.yml` file.
 
@@ -39,11 +43,15 @@ Configure a reverse proxy endpoint in the `nginx/nginx.conf` file for your servi
 
 Create and start new containers with :
 
-`docker-compose up -d`
+```
+docker-compose up -d
+```
 
 And reload your nginx configuration with :
 
-`docker exec seedbox_nginx_1 nginx -s reload`
+```
+docker exec seedbox_nginx_1 nginx -s reload
+```
 
 ## Notes
 
